@@ -2,7 +2,7 @@
 Steam Review Sentiment — interactive dashboard
 ==============================================
 Traditional NLP vs. Transformers on real Steam reviews (2024-2026) collected via
-the official Steam Reviews API. Three tabs, Lucide icons, dark theme.
+the official Steam Reviews API. Sidebar nav sections, Lucide icons, dark theme.
 The live demo runs the fine-tuned model in-process (pre-warmed in the background).
 
 Run:  streamlit run app.py
@@ -205,10 +205,13 @@ _warm_once()
 with st.sidebar:
     _banner = os.path.join(os.path.dirname(__file__), "assets", "banner.jpg")
     if os.path.exists(_banner):
-        st.image(_banner, width="stretch")
+        _bc = st.columns([1, 2, 1])
+        _bc[1].image(_banner, width=84)
     st.markdown(f"<div style='display:flex;align-items:center;gap:8px;font-size:17px;font-weight:750;color:{TEXT}'>"
                 f"{icon('gamepad',22,PRIMARY)}Steam Sentiment</div>", unsafe_allow_html=True)
     st.caption(f"{R.PROJECT['course']} · {R.PROJECT['school']}")
+    st.divider()
+    nav = st.radio("Sections", ["Data & EDA", "Results", "Try it Live"], label_visibility="collapsed")
     st.divider()
     st.markdown(f"{icon('users',15,SUBTLE,2,6)}<b style='color:{TEXT}'>Team</b>", unsafe_allow_html=True)
     for mm in R.PROJECT["team"]:
@@ -241,10 +244,9 @@ with m[3]:
     card("calendar", "2024–2026", "Recent reviews", PRIMARY)
 
 st.write("")
-tab_data, tab_results, tab_live = st.tabs(["  Data & EDA  ", "  Results  ", "  Try it Live  "])
 
 # ====================================================================== DATA & EDA
-with tab_data:
+if nav == "Data & EDA":
     st.caption(f"{R.RAW_REVIEW_COUNT:,} recent reviews across {R.N_GAMES} games, via the official Steam Reviews API. "
                f"Labels are each review's recommend / not-recommend ({R.LABEL_SOURCE}) — Steam has no star ratings.")
     d = st.columns(4)
@@ -317,7 +319,7 @@ with tab_data:
                           for t in R.TFIDF_TOP_FEATURES), unsafe_allow_html=True)
 
 # ====================================================================== RESULTS
-with tab_results:
+elif nav == "Results":
     section("cpu", "Model comparison")
     comp = pd.DataFrame(R.MODEL_COMPARISON)
     fig = go.Figure()
@@ -380,7 +382,7 @@ with tab_results:
                 st.markdown(f"- {t}")
 
 # ====================================================================== TRY IT LIVE
-with tab_live:
+elif nav == "Try it Live":
     section("flask", "Try it live")
     st.markdown(("The transformer runs **our fine-tuned DistilBERT** in-process. "
                  if HAS_MODEL else "The fine-tuned model isn't bundled here, so the transformer falls back to a pretrained one. ")
