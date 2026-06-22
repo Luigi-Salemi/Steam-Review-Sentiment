@@ -75,7 +75,7 @@ st.markdown(f"""
   .mcard .ic {{ position:absolute; top:13px; right:15px; opacity:.85; }}
   .mcard .v {{ font-size:25px; font-weight:750; line-height:1.1; color:{TEXT}; }}
   .mcard .l {{ font-size:11.5px; color:{SUBTLE}; text-transform:uppercase; letter-spacing:.05em; margin-top:3px; }}
-  .mcard .d {{ font-size:12px; margin-top:5px; }}
+  .mcard .d {{ position:absolute; bottom:11px; left:16px; font-size:12px; font-weight:600; }}
   .sec {{ display:flex; align-items:center; gap:9px; margin:6px 0 4px; }}
   .sec .t {{ font-size:18px; font-weight:700; color:{TEXT}; }}
   .panel {{ border-radius:10px; padding:13px 16px; display:flex; gap:11px; align-items:flex-start; margin:8px 0;
@@ -209,13 +209,16 @@ with st.sidebar:
         st.markdown(f"<div style='text-align:center; margin:2px 0 10px'>{open(_logo).read()}</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='display:flex;align-items:center;gap:8px;font-size:17px;font-weight:750;color:{TEXT}'>"
                 f"{icon('gamepad',22,PRIMARY)}Steam Sentiment</div>", unsafe_allow_html=True)
-    st.caption(f"{R.PROJECT['course']} · {R.PROJECT['school']}")
+    st.markdown(
+        f"<div style='font-size:15px;color:{TEXT};font-weight:700;line-height:1.35;margin-top:3px'>{R.PROJECT['course']}</div>"
+        f"<div style='font-size:12.5px;color:{MUTE};margin-top:3px'>{R.PROJECT['school']}</div>",
+        unsafe_allow_html=True)
     st.divider()
     nav = st.radio("Sections", ["Data & EDA", "Results", "Try it Live"], label_visibility="collapsed")
     st.divider()
-    st.markdown(f"{icon('users',15,SUBTLE,2,6)}<b style='color:{TEXT}'>Team</b>", unsafe_allow_html=True)
+    st.markdown(f"{icon('users',16,SUBTLE,2,6)}<b style='color:{TEXT};font-size:15px'>Team</b>", unsafe_allow_html=True)
     for mm in R.PROJECT["team"]:
-        st.markdown(f"<div style='font-size:15.5px; color:{TEXT}; font-weight:600; margin:4px 0 4px 4px'>{icon('check',13,POS,2,6)}{mm}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='font-size:17.5px; color:{TEXT}; font-weight:650; margin:7px 0 7px 4px'>{icon('check',14,POS,2,7)}{mm}</div>", unsafe_allow_html=True)
     st.divider()
     st.markdown(badge("Fine-tuned model loaded", POS, "check") if HAS_MODEL
                 else badge("Pretrained fallback", ACCENT, "info"), unsafe_allow_html=True)
