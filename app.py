@@ -89,6 +89,9 @@ st.markdown(f"""
            border-radius:0 10px 10px 0; padding:11px 15px; margin-bottom:9px; min-height:86px; color:{TEXT}; }}
   .note {{ color:{SUBTLE}; font-size:13px; }}
   section[data-testid="stSidebar"] {{ background:{PANEL}; border-right:1px solid {BORDER}; }}
+  section[data-testid="stSidebar"] hr {{ margin:7px 0; }}
+  section[data-testid="stSidebar"] [data-testid="stVerticalBlock"] {{ gap:0.5rem; }}
+  section[data-testid="stSidebar"] .block-container {{ padding-top:1.1rem; }}
   .stTabs [data-baseweb="tab-list"] {{ gap:6px; position:sticky; top:0; z-index:100; background:{BG}; padding:8px 0 0; }}
   .stTabs [data-baseweb="tab"] {{ background:{PANEL}; border:1px solid {BORDER}; border-radius:9px 9px 0 0; padding:9px 20px; color:{SUBTLE}; }}
   .stTabs [aria-selected="true"] {{ background:{ELEV}; color:{TEXT}; border-bottom:2px solid {PRIMARY}; }}
@@ -176,13 +179,14 @@ def hbar(d, color=PRIMARY, h=340, xtitle="Reviews"):
     return style(fig, h)
 
 
-def verdict(is_pos, conf, caption):
+def verdict(is_pos, conf, caption=""):
     color = POS if is_pos else NEG
+    cap = f"<div style='color:{MUTE};font-size:12px;margin-top:3px'>{caption}</div>" if caption else ""
     st.markdown(f"<div style='background:{color}1f;border:1px solid {color}55;border-radius:10px;padding:14px 16px'>"
                 f"<div style='display:flex;align-items:center;font-size:19px;font-weight:750;color:{color}'>"
                 f"{icon('thumbsUp' if is_pos else 'thumbsDown',22,color,2.2,8)}{'Positive' if is_pos else 'Negative'}</div>"
                 f"<div class='note' style='margin-top:7px'>Confidence <b style='color:{TEXT}'>{conf*100:.0f}%</b></div>"
-                f"<div style='color:{MUTE};font-size:12px;margin-top:3px'>{caption}</div></div>", unsafe_allow_html=True)
+                f"{cap}</div>", unsafe_allow_html=True)
 
 
 # ── models (cached) + background warm-up ──────────────────────────────
@@ -237,24 +241,22 @@ _warm_once()
 with st.sidebar:
     _logo = os.path.join(os.path.dirname(__file__), "assets", "usd_logo.svg")
     if os.path.exists(_logo):
-        st.markdown(f"<div style='text-align:center; margin:2px 0 10px'>{open(_logo).read()}</div>", unsafe_allow_html=True)
-    st.markdown(f"<div style='display:flex;align-items:center;gap:8px;font-size:17px;font-weight:750;color:{TEXT}'>"
-                f"{icon('gamepad',22,PRIMARY)}Steam Sentiment</div>", unsafe_allow_html=True)
-    st.markdown(
-        f"<div style='font-size:15px;color:{TEXT};font-weight:700;line-height:1.35;margin-top:3px'>{R.PROJECT['course']}</div>"
-        f"<div style='font-size:12.5px;color:{MUTE};margin-top:3px'>{R.PROJECT['school']}</div>",
-        unsafe_allow_html=True)
+        st.markdown(f"<div style='text-align:center; margin:0 0 4px'>{open(_logo).read()}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div style='display:flex;align-items:center;gap:8px;font-size:16px;font-weight:750;color:{TEXT}'>"
+                f"{icon('gamepad',20,PRIMARY)}Steam Sentiment</div>"
+                f"<div style='font-size:14px;color:{TEXT};font-weight:700;line-height:1.3;margin-top:3px'>{R.PROJECT['course']}</div>"
+                f"<div style='font-size:12px;color:{MUTE};margin-top:1px'>{R.PROJECT['school']}</div>",
+                unsafe_allow_html=True)
     st.divider()
     nav = st.radio("Sections", ["Data & EDA", "Results", "Try it Live", "Takeaways"], label_visibility="collapsed")
     st.divider()
-    st.markdown(f"{icon('users',16,SUBTLE,2,6)}<b style='color:{TEXT};font-size:15px'>Team</b>", unsafe_allow_html=True)
-    for mm in R.PROJECT["team"]:
-        st.markdown(f"<div style='font-size:17.5px; color:{TEXT}; font-weight:650; margin:7px 0 7px 4px'>{icon('check',14,POS,2,7)}{mm}</div>", unsafe_allow_html=True)
+    st.markdown(f"{icon('users',15,SUBTLE,2,6)}<b style='color:{TEXT};font-size:14px'>Team</b>"
+                + "".join(f"<div style='font-size:16px;color:{TEXT};font-weight:650;margin:4px 0 0 4px'>"
+                          f"{icon('check',13,POS,2,7)}{mm}</div>" for mm in R.PROJECT["team"]),
+                unsafe_allow_html=True)
     st.divider()
     st.markdown(badge("Fine-tuned model loaded", POS, "check") if HAS_MODEL
                 else badge("Pretrained fallback", ACCENT, "info"), unsafe_allow_html=True)
-    st.caption("Live-demo transformer (pre-warming in the background)")
-    st.divider()
     with st.popover("Data provenance", icon=":material/fact_check:"):
         st.markdown(f"**[{getattr(R, 'DATASET_NAME', 'Dataset')}]({getattr(R, 'DATASET_URL', '#')})**")
         st.caption(R.PROVENANCE)
@@ -427,7 +429,7 @@ elif nav == "Try it Live":
     section("flask", "Try it live")
     st.markdown(("The transformer runs **our fine-tuned DistilBERT** in-process. "
                  if HAS_MODEL else "The fine-tuned model isn't bundled here, so the transformer falls back to a pretrained one. ")
-                + "The classic model is trained live on the bundled reviews. "
+                + "The classic model is a TF-IDF + Logistic Regression baseline. "
                 + "(The transformer pre-loads in the background when the page opens.)")
     st.markdown(badge("Fine-tuned DistilBERT ready", POS, "check") if HAS_MODEL
                 else badge("Pretrained fallback", ACCENT, "info"), unsafe_allow_html=True)
@@ -453,10 +455,10 @@ elif nav == "Try it Live":
             with c1:
                 st.markdown(f"{icon('scale',17,PRIMARY,2,7)}<b style='color:{TEXT}'>Classic · TF-IDF + LogReg</b>",
                             unsafe_allow_html=True)
-                mdl, n = classic()
+                mdl, _ = classic()
                 pr = mdl.predict_proba([txt])[0]
                 pred = int(pr.argmax())
-                verdict(pred == 1, pr[pred], f"Trained live on {n:,} reviews.")
+                verdict(pred == 1, pr[pred])
             with c2:
                 st.markdown(f"{icon('cpu',17,PRIMARY,2,7)}<b style='color:{TEXT}'>Transformer · DistilBERT</b>",
                             unsafe_allow_html=True)
