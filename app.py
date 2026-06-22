@@ -386,8 +386,10 @@ elif nav == "Results":
         section("layers", "Confusion matrix")
         lab = ["Negative", "Positive"]
         cm = go.Figure(go.Heatmap(z=R.DISTILBERT_CONFUSION, x=lab, y=lab, text=R.DISTILBERT_CONFUSION,
-                                  texttemplate="%{text}", textfont=dict(size=18, color=TEXT),
-                                  colorscale=[[0, PANEL], [1, PRIMARY]], showscale=False, xgap=4, ygap=4))
+                                  texttemplate="%{text}", textfont=dict(size=20, color=TEXT),
+                                  colorscale=[[0, "#2b3a5c"], [0.5, "#5573c4"], [1, "#8aa4f2"]],
+                                  showscale=True, xgap=3, ygap=3,
+                                  colorbar=dict(thickness=12, outlinewidth=0, tickfont=dict(color=SUBTLE, size=11))))
         cm.update_layout(xaxis_title="Predicted", yaxis_title="Actual", yaxis=dict(autorange="reversed"))
         st.plotly_chart(style(cm, 300), width="stretch")
     with cm2:
