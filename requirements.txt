@@ -1,0 +1,11 @@
+# Core dashboard — needs Streamlit 1.41+ for st.navigation, @st.fragment,
+# st.pills, st.badge, and width="stretch"
+streamlit>=1.41
+pandas>=2.0
+plotly>=5.18
+scikit-learn>=1.3
+
+# Live transformer demo (CPU-only torch keeps the build small on Linux hosts)
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch>=2.0
+transformers>=4.38

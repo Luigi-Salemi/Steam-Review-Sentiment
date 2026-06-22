@@ -1,0 +1,8 @@
+# BlueprintJS v6 dark theme — gray base, blue primary
+[theme]
+base = "dark"
+primaryColor = "#4C90F0"            # Blueprint Blue4
+backgroundColor = "#1C2127"         # Blueprint DarkGray1 (app background)
+secondaryBackgroundColor = "#252A31" # Blueprint DarkGray2 (panels / sidebar)
+textColor = "#F6F7F9"               # Blueprint LightGray5
+font = "sans serif"

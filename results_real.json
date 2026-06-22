@@ -1,0 +1,904 @@
+{
+  "dataset": "Steam game reviews (official Steam Reviews API)",
+  "raw_count": 12661,
+  "n_games": 247,
+  "game_dist": {
+    "Call of Duty: Modern Warfare 2 (2009)": 101,
+    "Counter-Strike: Condition Zero": 100,
+    "Monster Hunter Wilds": 56,
+    "V Rising": 56,
+    "War Robots: Frontiers": 55,
+    "Warface: Clutch": 55,
+    "Portal": 55,
+    "Warhammer 40,000: Rogue Trader": 55,
+    "PlanetSide 2": 55,
+    "XCOM 2": 55,
+    "theHunter Classic": 55,
+    "DOOM": 55,
+    "STAR WARS: The Old Republic": 55,
+    "Factorio": 55,
+    "Age of Empires II (Retired)": 55,
+    "Metro 2033 Redux": 55,
+    "STAR WARS Battlefront II (Classic, 2005)": 55,
+    "HELLDIVERS 2": 54,
+    "Hogwarts Legacy": 54,
+    "PAYDAY 2": 54,
+    "Grand Theft Auto IV: Complete Edition": 54,
+    "Heroes & Generals": 54,
+    "Dying Light": 54,
+    "7 Days to Die": 54,
+    "Half-Life 2": 54,
+    "Grim Dawn": 54,
+    "Satisfactory": 54,
+    "The Elder Scrolls V: Skyrim Special Edition": 54,
+    "Deathmatch Classic": 54,
+    "Resident Evil 2": 54,
+    "The Elder Scrolls Online": 54,
+    "Clicker Heroes": 54,
+    "Evolve Stage 2": 54,
+    "Life is Strange - Episode 1": 54,
+    "Hades": 54,
+    "Left 4 Dead": 54,
+    "Doki Doki Literature Club!": 54,
+    "Conan Exiles Enhanced": 54,
+    "DARK SOULS III": 54,
+    "FOR HONOR": 54,
+    "Call of Duty 2": 54,
+    "Stray": 54,
+    "Stellaris": 54,
+    "Battlefield 2042": 53,
+    "Starfield": 53,
+    "Cyberpunk 2077": 53,
+    "Hades II": 53,
+    "TEKKEN 8": 53,
+    "New World: Aeternum": 53,
+    "Last Epoch": 53,
+    "Half-Life 2: Lost Coast": 53,
+    "The Witcher 3: Wild Hunt": 53,
+    "Among Us": 53,
+    "Valheim": 53,
+    "Sekiro: Shadows Die Twice - GOTY Edition": 53,
+    "CyberCorp": 53,
+    "Fallout 4": 53,
+    "Life is Strange 2": 53,
+    "DayZ": 53,
+    "The Elder Scrolls V: Skyrim": 53,
+    "No More Room in Hell": 53,
+    "Tomb Raider Game of the Year": 53,
+    "A Story About My Uncle": 53,
+    "Guacamelee! Super Turbo Championship Edition": 53,
+    "Dirty Bomb": 53,
+    "Chivalry: Medieval Warfare": 53,
+    "Europa Universalis IV": 53,
+    "Crab Game": 53,
+    "Forza Horizon 4": 53,
+    "Realm Royale": 53,
+    "Portal 2": 53,
+    "Forza Horizon 5": 53,
+    "Total War: THREE KINGDOMS": 53,
+    "Prison Architect": 53,
+    "DOOM Eternal": 53,
+    "Cry of Fear": 53,
+    "SCUM": 53,
+    "Deep Rock Galactic": 53,
+    "Infestation: The New Z": 53,
+    "DAVE THE DIVER": 53,
+    "Ready or Not": 53,
+    "Saints Row IV: Re-Elected": 53,
+    "Crossout": 53,
+    "Battlefield 1": 53,
+    "Poppy Playtime": 53,
+    "Darkest Dungeon": 53,
+    "Just Cause 2": 53,
+    "EA SPORTS FIFA 23": 52,
+    "Diablo IV": 52,
+    "Baldur's Gate 3": 52,
+    "Team Fortress 2": 52,
+    "Rust": 52,
+    "World of Warships": 52,
+    "Stardew Valley": 52,
+    "The Forest": 52,
+    "Phasmophobia": 52,
+    "NARAKA: BLADEPOINT": 52,
+    "Halo Infinite": 52,
+    "Ring of Elysium": 52,
+    "Z1 Battle Royale": 52,
+    "Cities: Skylines": 52,
+    "Sid Meier's Civilization V": 52,
+    "Battlefield V": 52,
+    "R.E.P.O.": 52,
+    "MONSTER HUNTER RISE": 52,
+    "No Man's Sky": 52,
+    "Hollow Knight": 52,
+    "Robocraft": 52,
+    "Sea of Thieves: 2026 Edition": 52,
+    "The Binding of Isaac: Rebirth": 52,
+    "SCP: Secret Laboratory": 52,
+    "Dota Underlords": 52,
+    "Vampire Survivors": 52,
+    "Day of Defeat": 52,
+    "Devil May Cry 5": 52,
+    "Company of Heroes 2": 52,
+    "Total War: WARHAMMER II": 52,
+    "Undertale": 52,
+    "Halo: The Master Chief Collection": 52,
+    "Half-Life Deathmatch: Source": 52,
+    "Half-Life 2: Episode Two": 52,
+    "Business Tour - Board Game with Online Multiplayer": 52,
+    "Divinity: Original Sin 2 - Definitive Edition": 52,
+    "Dying Light 2 Stay Human: Reloaded Edition": 52,
+    "POSTAL 2": 52,
+    "Mount & Blade: Warband": 52,
+    "Fishing Planet": 52,
+    "DCS World Steam Edition": 52,
+    "Assassin's Creed Odyssey": 52,
+    "Starbound": 52,
+    "Palworld": 51,
+    "Warhammer 40,000: Space Marine 2": 51,
+    "ELDEN RING": 51,
+    "Path of Exile 2": 51,
+    "Lost Ark": 51,
+    "War Thunder": 51,
+    "Path of Exile": 51,
+    "Dead by Daylight": 51,
+    "Fall Guys: Ultimate Knockout": 51,
+    "Borderlands 2": 51,
+    "Half-Life": 51,
+    "Monster Hunter: World": 51,
+    "Project Zomboid": 51,
+    "Counter-Strike: Source": 51,
+    "Schedule I": 51,
+    "Human Fall Flat": 51,
+    "Sons Of The Forest": 51,
+    "Mount & Blade II: Bannerlord": 51,
+    "Trove": 51,
+    "Sid Meier\u2019s Civilization VI": 51,
+    "War Robots": 51,
+    "BeamNG.drive": 51,
+    "Subnautica": 51,
+    "Content Warning": 51,
+    "Fallout: New Vegas": 51,
+    "Black Desert": 51,
+    "ULTRAKILL": 51,
+    "It Takes Two": 51,
+    "Assetto Corsa": 51,
+    "MultiVersus": 51,
+    "Assassin\u2019s Creed IV Black Flag": 51,
+    "KurtzPel": 51,
+    "Dead Cells": 51,
+    "Neverwinter": 51,
+    "Russian Fishing 4": 51,
+    "RimWorld": 51,
+    "Counter-Strike Nexon: Studio": 51,
+    "Little Nightmares": 51,
+    "Tom Clancy\u2019s The Division": 51,
+    "Middle-earth: Shadow of Mordor": 51,
+    "AdVenture Capitalist": 51,
+    "Just Cause 3": 51,
+    "Bloons TD 6": 51,
+    "Albion Online": 51,
+    "Overwatch 2": 50,
+    "Dragon's Dogma 2": 50,
+    "Throne and Liberty": 50,
+    "Once Human": 50,
+    "Left 4 Dead 2": 50,
+    "Unturned": 50,
+    "Wallpaper Engine": 50,
+    "Brawlhalla": 50,
+    "Destiny 2": 50,
+    "Raft": 50,
+    "Black Squad": 50,
+    "Don't Starve Together": 50,
+    "Hunt: Showdown 1896": 50,
+    "Arma 3": 50,
+    "Call of Duty: Black Ops III": 50,
+    "Slay the Spire": 50,
+    "The Cycle: Frontier": 50,
+    "theHunter: Call of the Wild": 50,
+    "APB Reloaded": 50,
+    "God of War": 50,
+    "Split Fiction": 50,
+    "eFootball": 49,
+    "Lethal Company": 49,
+    "Apex Legends": 49,
+    "Warframe": 49,
+    "Euro Truck Simulator 2": 49,
+    "Half-Life 2: Deathmatch": 49,
+    "Red Dead Redemption 2": 49,
+    "World of Tanks Blitz": 49,
+    "The Sims 4": 49,
+    "Risk of Rain 2": 49,
+    "Hearts of Iron IV": 49,
+    "Deceit": 49,
+    "BattleBit Remastered": 49,
+    "Cuphead": 49,
+    "People Playground": 49,
+    "Eternal Return": 49,
+    "HITMAN 2": 49,
+    "Titanfall 2": 49,
+    "Grand Theft Auto V Enhanced": 49,
+    "Call of Duty: Modern Warfare II": 48,
+    "Terraria": 48,
+    "Tom Clancy's Rainbow Six Siege": 48,
+    "ARK: Survival Evolved": 48,
+    "Paladins": 48,
+    "Counter-Strike": 48,
+    "Resident Evil 4": 48,
+    "Kathy Rain": 48,
+    "Blender": 48,
+    "Braveland": 48,
+    "Saints Row: The Third": 48,
+    "Garry's Mod": 47,
+    "SMITE": 47,
+    "Geometry Dash": 47,
+    "Half-Life 2: Episode One": 47,
+    "Black Myth: Wukong": 46,
+    "Marvel Rivals": 46,
+    "Grand Theft Auto V Legacy": 46,
+    "VRChat": 46,
+    "NBA 2K20": 46,
+    "Castle Crashers": 46,
+    "Splitgate: Arena Warfare": 46,
+    "Stumble Guys": 46,
+    "PUBG: BATTLEGROUNDS": 45,
+    "Rocket League": 45,
+    "EA SPORTS FC 25": 44,
+    "EA SPORTS FC 24": 44,
+    "Counter-Strike: Global Offensive": 43,
+    "Loadout": 43,
+    "Divide By Sheep": 41,
+    "Football Manager 2020": 32,
+    "Z1 Battle Royale: Test Server": 10,
+    "Street Warriors Online": 5
+  },
+  "balanced_total": 12182,
+  "label_balance": {
+    "Positive (1)": 6091,
+    "Negative (0)": 6091
+  },
+  "unique_reviews": 11659,
+  "duplicate_reviews": 523,
+  "avg_review_length": {
+    "Negative (0)": 53.9,
+    "Positive (1)": 29.5
+  },
+  "top_words": [
+    [
+      "game",
+      11833
+    ],
+    [
+      "like",
+      2678
+    ],
+    [
+      "play",
+      2235
+    ],
+    [
+      "fun",
+      2054
+    ],
+    [
+      "good",
+      1948
+    ],
+    [
+      "get",
+      1663
+    ],
+    [
+      "time",
+      1627
+    ],
+    [
+      "one",
+      1590
+    ],
+    [
+      "even",
+      1581
+    ],
+    [
+      "games",
+      1308
+    ],
+    [
+      "really",
+      1212
+    ],
+    [
+      "great",
+      1019
+    ],
+    [
+      "still",
+      1017
+    ],
+    [
+      "shields",
+      1005
+    ],
+    [
+      "would",
+      1003
+    ],
+    [
+      "much",
+      971
+    ],
+    [
+      "story",
+      966
+    ],
+    [
+      "playing",
+      935
+    ],
+    [
+      "played",
+      884
+    ],
+    [
+      "also",
+      833
+    ]
+  ],
+  "top_words_full": [
+    [
+      "game",
+      11833
+    ],
+    [
+      "like",
+      2678
+    ],
+    [
+      "play",
+      2235
+    ],
+    [
+      "fun",
+      2054
+    ],
+    [
+      "good",
+      1948
+    ],
+    [
+      "get",
+      1663
+    ],
+    [
+      "time",
+      1627
+    ],
+    [
+      "one",
+      1590
+    ],
+    [
+      "even",
+      1581
+    ],
+    [
+      "games",
+      1308
+    ],
+    [
+      "really",
+      1212
+    ],
+    [
+      "great",
+      1019
+    ],
+    [
+      "still",
+      1017
+    ],
+    [
+      "shields",
+      1005
+    ],
+    [
+      "would",
+      1003
+    ],
+    [
+      "much",
+      971
+    ],
+    [
+      "story",
+      966
+    ],
+    [
+      "playing",
+      935
+    ],
+    [
+      "played",
+      884
+    ],
+    [
+      "also",
+      833
+    ],
+    [
+      "best",
+      832
+    ],
+    [
+      "hours",
+      829
+    ],
+    [
+      "make",
+      828
+    ],
+    [
+      "every",
+      786
+    ],
+    [
+      "gameplay",
+      763
+    ],
+    [
+      "way",
+      736
+    ],
+    [
+      "first",
+      719
+    ],
+    [
+      "love",
+      716
+    ],
+    [
+      "want",
+      711
+    ],
+    [
+      "new",
+      709
+    ],
+    [
+      "better",
+      704
+    ],
+    [
+      "bad",
+      701
+    ],
+    [
+      "people",
+      694
+    ],
+    [
+      "feel",
+      693
+    ],
+    [
+      "back",
+      668
+    ],
+    [
+      "ever",
+      668
+    ],
+    [
+      "players",
+      662
+    ],
+    [
+      "many",
+      638
+    ],
+    [
+      "feels",
+      620
+    ],
+    [
+      "recommend",
+      617
+    ],
+    [
+      "made",
+      615
+    ],
+    [
+      "combat",
+      613
+    ],
+    [
+      "well",
+      591
+    ],
+    [
+      "years",
+      582
+    ],
+    [
+      "never",
+      576
+    ],
+    [
+      "could",
+      567
+    ],
+    [
+      "got",
+      560
+    ],
+    [
+      "lot",
+      558
+    ],
+    [
+      "can't",
+      524
+    ],
+    [
+      "player",
+      520
+    ],
+    [
+      "experience",
+      512
+    ],
+    [
+      "think",
+      491
+    ],
+    [
+      "world",
+      491
+    ],
+    [
+      "friends",
+      487
+    ],
+    [
+      "know",
+      485
+    ],
+    [
+      "money",
+      464
+    ],
+    [
+      "need",
+      464
+    ],
+    [
+      "life",
+      447
+    ],
+    [
+      "see",
+      442
+    ],
+    [
+      "pretty",
+      441
+    ],
+    [
+      "everything",
+      435
+    ],
+    [
+      "boring",
+      431
+    ],
+    [
+      "long",
+      420
+    ],
+    [
+      "buy",
+      418
+    ],
+    [
+      "hard",
+      416
+    ],
+    [
+      "something",
+      412
+    ],
+    [
+      "makes",
+      410
+    ],
+    [
+      "actually",
+      406
+    ],
+    [
+      "steam",
+      406
+    ],
+    [
+      "around",
+      405
+    ],
+    [
+      "without",
+      403
+    ],
+    [
+      "nothing",
+      396
+    ],
+    [
+      "dont",
+      394
+    ],
+    [
+      "things",
+      394
+    ],
+    [
+      "amazing",
+      381
+    ],
+    [
+      "character",
+      378
+    ],
+    [
+      "enough",
+      378
+    ],
+    [
+      "times",
+      375
+    ],
+    [
+      "worth",
+      373
+    ],
+    [
+      "content",
+      370
+    ],
+    [
+      "since",
+      366
+    ],
+    [
+      "find",
+      365
+    ],
+    [
+      "getting",
+      362
+    ],
+    [
+      "run",
+      361
+    ],
+    [
+      "work",
+      358
+    ],
+    [
+      "system",
+      357
+    ],
+    [
+      "going",
+      351
+    ],
+    [
+      "mechanics",
+      346
+    ],
+    [
+      "give",
+      344
+    ],
+    [
+      "say",
+      343
+    ],
+    [
+      "old",
+      343
+    ],
+    [
+      "instead",
+      342
+    ],
+    [
+      "thing",
+      340
+    ],
+    [
+      "try",
+      338
+    ],
+    [
+      "always",
+      333
+    ],
+    [
+      "level",
+      332
+    ],
+    [
+      "point",
+      329
+    ],
+    [
+      "though",
+      328
+    ],
+    [
+      "end",
+      327
+    ],
+    [
+      "characters",
+      325
+    ],
+    [
+      "enjoy",
+      324
+    ],
+    [
+      "anything",
+      323
+    ],
+    [
+      "free",
+      315
+    ],
+    [
+      "overall",
+      314
+    ],
+    [
+      "hate",
+      314
+    ],
+    [
+      "enemies",
+      313
+    ],
+    [
+      "take",
+      311
+    ],
+    [
+      "half",
+      309
+    ],
+    [
+      "there's",
+      308
+    ],
+    [
+      "cant",
+      308
+    ],
+    [
+      "devs",
+      303
+    ],
+    [
+      "use",
+      303
+    ],
+    [
+      "different",
+      300
+    ],
+    [
+      "bugs",
+      299
+    ],
+    [
+      "little",
+      299
+    ],
+    [
+      "keep",
+      297
+    ],
+    [
+      "cool",
+      295
+    ],
+    [
+      "start",
+      294
+    ],
+    [
+      "single",
+      291
+    ],
+    [
+      "dlc",
+      289
+    ]
+  ],
+  "tfidf_features": [
+    "10",
+    "best",
+    "don",
+    "fun",
+    "game",
+    "gameplay",
+    "games",
+    "good",
+    "great",
+    "hours",
+    "just",
+    "like",
+    "make",
+    "play",
+    "played",
+    "playing",
+    "really",
+    "shields",
+    "story",
+    "time"
+  ],
+  "lr": {
+    "accuracy": 0.7887,
+    "precision": 0.7887,
+    "recall": 0.7887,
+    "f1": 0.7887,
+    "report": {
+      "Negative (0)": {
+        "precision": 0.79,
+        "recall": 0.79,
+        "f1-score": 0.79,
+        "support": 1219
+      },
+      "Positive (1)": {
+        "precision": 0.79,
+        "recall": 0.79,
+        "f1-score": 0.79,
+        "support": 1218
+      }
+    },
+    "train_size": 9745,
+    "test_size": 2437
+  },
+  "distilbert": {
+    "accuracy": 0.8506,
+    "f1": 0.8505,
+    "report": {
+      "Negative": {
+        "precision": 0.87,
+        "recall": 0.82,
+        "f1-score": 0.85,
+        "support": 1216
+      },
+      "Positive": {
+        "precision": 0.83,
+        "recall": 0.88,
+        "f1-score": 0.85,
+        "support": 1221
+      }
+    },
+    "confusion": [
+      [
+        1002,
+        214
+      ],
+      [
+        150,
+        1071
+      ]
+    ],
+    "correct": 2073,
+    "misclassified": 364,
+    "test_size": 2437
+  }
+}
