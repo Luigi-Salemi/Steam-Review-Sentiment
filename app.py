@@ -141,6 +141,14 @@ def panel(icon_name, html, accent=PRIMARY):
                 unsafe_allow_html=True)
 
 
+def list_card(text, icon_name, col):
+    st.markdown(f"<div style='display:flex;gap:11px;align-items:flex-start;background:{PANEL};"
+                f"border:1px solid {BORDER};border-left:4px solid {col};border-radius:10px;"
+                f"padding:12px 15px;margin:9px 0;color:{TEXT};font-size:14px;line-height:1.5'>"
+                f"<span style='flex:0 0 auto;margin-top:1px'>{icon(icon_name,17,col,2,0)}</span>"
+                f"<span>{text}</span></div>", unsafe_allow_html=True)
+
+
 def badge(text, color=PRIMARY, icon_name=None):
     ic = icon(icon_name, 14, color, 2.4, 5) if icon_name else ""
     return f"<span class='badge' style='background:{color}1f;color:{color};border:1px solid {color}55'>{ic}{text}</span>"
@@ -237,7 +245,7 @@ with st.sidebar:
         f"<div style='font-size:12.5px;color:{MUTE};margin-top:3px'>{R.PROJECT['school']}</div>",
         unsafe_allow_html=True)
     st.divider()
-    nav = st.radio("Sections", ["Data & EDA", "Results", "Try it Live"], label_visibility="collapsed")
+    nav = st.radio("Sections", ["Data & EDA", "Results", "Takeaways", "Try it Live"], label_visibility="collapsed")
     st.divider()
     st.markdown(f"{icon('users',16,SUBTLE,2,6)}<b style='color:{TEXT};font-size:15px'>Team</b>", unsafe_allow_html=True)
     for mm in R.PROJECT["team"]:
@@ -391,13 +399,26 @@ elif nav == "Results":
             card("alert", f"{R.DISTILBERT_MISCLASSIFIED}", "Misclassified", NEG)
         with st.expander("DistilBERT fine-tuning config"):
             st.table(pd.DataFrame({"Setting": list(R.DISTILBERT_CONFIG), "Value": list(R.DISTILBERT_CONFIG.values())}))
-        with st.expander("Takeaways & limitations"):
-            st.markdown(f"{icon('check',15,POS,2,5)}**Takeaways**", unsafe_allow_html=True)
-            for t in R.KEY_TAKEAWAYS:
-                st.markdown(f"- {t}")
-            st.markdown(f"{icon('alert',15,ACCENT,2,5)}**Limitations & next steps**", unsafe_allow_html=True)
-            for t in R.LIMITATIONS:
-                st.markdown(f"- {t}")
+
+# ====================================================================== TAKEAWAYS
+elif nav == "Takeaways":
+    section("sparkles", "Takeaways & limitations")
+    st.caption("What the project showed, and where it could go next.")
+    panel("trophy", f"Fine-tuned <b>DistilBERT</b> reached <b>{R.DISTILBERT_METRICS['F1 (weighted)']*100:.1f}% F1</b>, "
+                    f"beating the TF-IDF + Logistic Regression baseline "
+                    f"(<b>{R.LR_METRICS['F1 (weighted)']*100:.1f}% F1</b>) by <b>~{GAIN} points</b> "
+                    f"on the same held-out test set.", ACCENT)
+    st.write("")
+    a, b = st.columns(2)
+    with a:
+        section("check", "Key takeaways", POS)
+        for t in R.KEY_TAKEAWAYS:
+            list_card(t, "check", POS)
+    with b:
+        section("alert", "Limitations & next steps", ACCENT)
+        for t in R.LIMITATIONS:
+            nxt = t.lower().startswith("next")
+            list_card(t, "sparkles" if nxt else "alert", PRIMARY if nxt else ACCENT)
 
 # ====================================================================== TRY IT LIVE
 elif nav == "Try it Live":
