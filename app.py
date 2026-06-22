@@ -85,7 +85,7 @@ st.markdown(f"""
   .pill.hot {{ background:{ACCENT}1f; color:{ACCENT}; border-color:{ACCENT}66; }}
   .badge {{ display:inline-flex; align-items:center; border-radius:999px; padding:3px 11px; font-size:12.5px; font-weight:700; }}
   .step {{ border:1px solid {BORDER}; border-left:4px solid {PRIMARY}; background:{PANEL};
-           border-radius:0 10px 10px 0; padding:11px 15px; margin-bottom:9px; color:{TEXT}; }}
+           border-radius:0 10px 10px 0; padding:11px 15px; margin-bottom:9px; min-height:86px; color:{TEXT}; }}
   .note {{ color:{SUBTLE}; font-size:13px; }}
   section[data-testid="stSidebar"] {{ background:{PANEL}; border-right:1px solid {BORDER}; }}
   .stTabs [data-baseweb="tab-list"] {{ gap:6px; position:sticky; top:0; z-index:100; background:{BG}; padding:8px 0 0; }}
