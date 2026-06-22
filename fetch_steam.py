@@ -18,8 +18,9 @@ import urllib.parse
 import urllib.request
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "steam_reviews.csv")
-PER_TYPE = int(os.environ.get("PER_TYPE", "70"))   # reviews per game per sentiment
-MAX_GAMES = int(os.environ.get("MAX_GAMES", "110"))
+PER_TYPE = int(os.environ.get("PER_TYPE", "28"))   # reviews per game per sentiment (kept small for variety)
+MAX_GAMES = int(os.environ.get("MAX_GAMES", "250"))
+MIN_TS = 1704067200   # 2024-01-01 UTC — keep only recent (2024-2026) reviews
 HDR = {"User-Agent": "Mozilla/5.0 (academic review collection)"}
 
 # modern + divisive titles (guarantee variety + a real negative class). FIFA is
@@ -37,16 +38,28 @@ SEED = {
 
 
 def get_top_games():
+    """Broad, varied pool: current most-played (modern) + most-owned 1000."""
+    pool = {}
+    # modern / currently popular first
     try:
         req = urllib.request.Request("https://steamspy.com/api.php?request=top100in2weeks", headers=HDR)
-        data = json.load(urllib.request.urlopen(req, timeout=30))
-        return {int(a): d.get("name", f"App {a}") for a, d in data.items()}
+        for a, d in json.load(urllib.request.urlopen(req, timeout=30)).items():
+            pool[int(a)] = d.get("name", f"App {a}")
+        time.sleep(1)
     except Exception as e:
-        print("SteamSpy unavailable, using seed list only:", e, flush=True)
-        return {}
+        print("top100in2weeks unavailable:", e, flush=True)
+    # broad variety: most-owned games (up to ~1000)
+    try:
+        req = urllib.request.Request("https://steamspy.com/api.php?request=all&page=0", headers=HDR)
+        for a, d in json.load(urllib.request.urlopen(req, timeout=60)).items():
+            pool.setdefault(int(a), d.get("name", f"App {a}"))
+    except Exception as e:
+        print("all/page0 unavailable:", e, flush=True)
+    return pool
 
 
 def fetch(appid, review_type, want):
+    """Newest-first; keep only reviews created on/after MIN_TS (2024+)."""
     out, cursor = [], "*"
     while len(out) < want:
         q = urllib.parse.urlencode({"json": 1, "num_per_page": 100, "filter": "recent",
@@ -60,7 +73,11 @@ def fetch(appid, review_type, want):
         revs = data.get("reviews", [])
         if not revs:
             break
-        out.extend(revs)
+        before = len(out)
+        out.extend(v for v in revs if v.get("timestamp_created", 0) >= MIN_TS)
+        # recent filter is newest-first: if a full page added nothing in range, stop
+        if len(out) == before and revs[-1].get("timestamp_created", 0) < MIN_TS:
+            break
         cursor = data.get("cursor", "")
         if not cursor:
             break
@@ -68,13 +85,13 @@ def fetch(appid, review_type, want):
     return out[:want]
 
 
-games = {**get_top_games(), **SEED}
+games = {**SEED, **get_top_games()}          # seeds guaranteed in the first slots
 games = dict(list(games.items())[:MAX_GAMES])
 print(f"collecting from {len(games)} games...", flush=True)
 
 rows, seen = [], set()
 for i, (appid, name) in enumerate(games.items(), 1):
-    for rtype, label, sent in [("positive", 1, "Positive"), ("negative", 0, "Negative")]:
+    for rtype, label in [("positive", 1), ("negative", 0)]:
         for v in fetch(appid, rtype, PER_TYPE):
             rid = v.get("recommendationid")
             if rid in seen:
@@ -83,9 +100,11 @@ for i, (appid, name) in enumerate(games.items(), 1):
             text = (v.get("review") or "").replace("\n", " ").replace("\r", " ").strip()
             if len(text) < 5:
                 continue
+            ts = v.get("timestamp_created", 0)
+            # Steam has no star rating — label is the reviewer's recommend/not-recommend
             rows.append({"review_id": rid, "product_name": name, "review_title": "",
-                         "review_text": text, "text": text, "rating": 5 if label == 1 else 1,
-                         "sentiment": sent, "label": label,
+                         "review_text": text, "text": text, "label": label,
+                         "review_date": time.strftime("%Y-%m-%d", time.gmtime(ts)),
                          "source_url": f"https://store.steampowered.com/app/{appid}",
                          "category": "Video Games"})
     if i % 10 == 0:

@@ -35,8 +35,12 @@ run_steam.py                   # pipeline -> results_real.json
 build_results.py               # results_real.json -> results.py
 results.py / results_real.json # the numbers shown in the dashboard
 data/reviews.csv               # collected reviews (used by the live demo)
+model/                         # the fine-tuned DistilBERT (Git LFS) — used live in the app
 assets/wordcloud.png
 ```
+
+The **Try it Live** tab runs the project's **own fine-tuned DistilBERT** (saved to `model/` by the
+notebook), not an off-the-shelf model — so you classify with the exact model trained here.
 
 ## Run it
 ```bash

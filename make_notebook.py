@@ -16,7 +16,8 @@ fine-tuned **DistilBERT** transformer for binary sentiment.
 Sentiment label comes from each review's *recommend / not-recommend* (`voted_up`).""")
 
 md("## 0. Imports")
-code("""import time, urllib.request, urllib.parse, json, re
+code("""%matplotlib inline
+import os, time, urllib.request, urllib.parse, json, re
 from collections import Counter
 import pandas as pd, numpy as np
 import matplotlib.pyplot as plt
@@ -79,19 +80,27 @@ def fetch(appid, review_type, want):
         time.sleep(0.2)
     return out[:want]
 
-games = {**get_top_games(), **SEED}
-rows, seen = [], set()
-for appid, name in games.items():
-    for rtype, label in [("positive",1), ("negative",0)]:
-        for v in fetch(appid, rtype, PER_TYPE):
-            rid = v.get("recommendationid")
-            if rid in seen: continue
-            seen.add(rid)
-            text = (v.get("review") or "").replace("\\n"," ").strip()
-            if len(text) < 5: continue
-            rows.append({"product_name":name, "text":text, "label":label})
-df = pd.DataFrame(rows)
-print("collected", len(df), "reviews from", df.product_name.nunique(), "games")
+MAX_GAMES, MIN_TS = 250, 1704067200   # MIN_TS = 2024-01-01 (keep recent reviews only)
+
+# Reuse the already-collected file if present (fast + consistent); else scrape live.
+if os.path.exists("steam_reviews.csv"):
+    df = pd.read_csv("steam_reviews.csv")[["product_name","text","label"]].dropna()
+    print("loaded", len(df), "reviews from steam_reviews.csv")
+else:
+    games = dict(list({**SEED, **get_top_games()}.items())[:MAX_GAMES])
+    rows, seen = [], set()
+    for appid, name in games.items():
+        for rtype, label in [("positive",1), ("negative",0)]:
+            for v in fetch(appid, rtype, PER_TYPE):
+                rid = v.get("recommendationid")
+                if rid in seen: continue
+                seen.add(rid)
+                if v.get("timestamp_created",0) < MIN_TS: continue
+                text = (v.get("review") or "").replace("\\n"," ").strip()
+                if len(text) < 5: continue
+                rows.append({"product_name":name, "text":text, "label":label})
+    df = pd.DataFrame(rows); df.to_csv("steam_reviews.csv", index=False)
+print("reviews:", len(df), "| games:", df.product_name.nunique())
 df.head()''')
 
 md("## 2. Balanced binary sample\nLabels come from recommend (1) / not-recommend (0). Balance the two classes.")
@@ -143,7 +152,13 @@ with torch.no_grad():
         preds += torch.argmax(model(**b).logits, -1).cpu().tolist(); labels += y.tolist()
 print("DistilBERT accuracy:", round(accuracy_score(labels, preds), 4))
 print(classification_report(labels, preds, target_names=["Negative","Positive"]))
-ConfusionMatrixDisplay(confusion_matrix(labels, preds), display_labels=["Negative","Positive"]).plot(); plt.show()''')
+ConfusionMatrixDisplay(confusion_matrix(labels, preds), display_labels=["Negative","Positive"]).plot(); plt.show()
+
+# Save the fine-tuned model so the Streamlit app can use it for live inference
+model.config.id2label = {0: "NEGATIVE", 1: "POSITIVE"}
+model.config.label2id = {"NEGATIVE": 0, "POSITIVE": 1}
+model.save_pretrained("model"); tok.save_pretrained("model")
+print("saved fine-tuned model to ./model")''')
 
 md("""## 6. Results
 DistilBERT's contextual embeddings typically beat the TF-IDF + Logistic Regression

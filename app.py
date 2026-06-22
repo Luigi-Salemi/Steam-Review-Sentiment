@@ -147,14 +147,19 @@ def classic():
     return p, len(df)
 
 
-@st.cache_resource(show_spinner="Loading transformer (first run downloads ~250 MB)…")
+@st.cache_resource(show_spinner="Loading the fine-tuned DistilBERT…")
 def transformer():
+    """Use OUR fine-tuned model (./model) if present, else fall back to a pretrained one."""
     from transformers import pipeline
-    return pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
+    local = os.path.join(os.path.dirname(__file__), "model")
+    if os.path.isdir(local):
+        return pipeline("sentiment-analysis", model=local, tokenizer=local), "our fine-tuned DistilBERT"
+    return (pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english"),
+            "pretrained DistilBERT (fallback)")
 
 
 text = st.text_area("Review", value=list(R.EXAMPLE_REVIEWS.values())[0], height=100)
-run_tf = st.checkbox("Also run the transformer (optional, slower on first use)")
+run_tf = st.checkbox("Also run the fine-tuned transformer (optional, slower on first use)")
 
 if st.button("Classify", type="primary") and text.strip():
     c1, c2 = st.columns(2)
@@ -167,15 +172,17 @@ if st.button("Classify", type="primary") and text.strip():
             f"{'Positive 👍' if pred == 1 else 'Negative 👎'} — {proba[pred]*100:.0f}% confident")
         st.caption(f"Trained on {n:,} real Steam reviews.")
     with c2:
-        st.markdown("**Transformer · DistilBERT (SST-2)**")
+        st.markdown("**Transformer · Fine-tuned DistilBERT**")
         if not run_tf:
             st.info("Tick the box above to run the transformer.")
         else:
             try:
-                out = transformer()(text[:512])[0]
+                clf, which = transformer()
+                out = clf(text[:512])[0]
                 pos = out["label"].upper().startswith("POS")
                 (st.success if pos else st.error)(
                     f"{'Positive 👍' if pos else 'Negative 👎'} — {out['score']*100:.0f}% confident")
+                st.caption(f"Using {which}.")
             except Exception as e:
                 st.warning(f"Couldn't load the transformer here (memory limit on free hosting): {e}")
 
