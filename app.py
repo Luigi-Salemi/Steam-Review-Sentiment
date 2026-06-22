@@ -222,7 +222,7 @@ with st.sidebar:
     st.caption("Live-demo transformer (pre-warming in the background)")
     st.divider()
     with st.popover("Data provenance", icon=":material/fact_check:"):
-        st.markdown(f"**[{R.DATASET_NAME}]({R.DATASET_URL})**")
+        st.markdown(f"**[{getattr(R, 'DATASET_NAME', 'Dataset')}]({getattr(R, 'DATASET_URL', '#')})**")
         st.caption(R.PROVENANCE)
 
 

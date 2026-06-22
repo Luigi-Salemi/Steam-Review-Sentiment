@@ -11,7 +11,7 @@ not-recommend (voted_up). No estimates.
 
 PROJECT = {
     "title": "Steam Review Sentiment — Traditional NLP vs. Transformers",
-    "course": "ADS-509 — Applied Text Mining",
+    "course": "Applied Large Language Models for Data Science (ADS-509-01)",
     "school": "University of San Diego",
     "team": ["Gagandeep Singh", "Shivam Patel", "Luigi Salemi"],
     "objective": (
