@@ -27,7 +27,7 @@ BG, PANEL, ELEV = "#1C2127", "#252A31", "#2F343C"
 BORDER, BORDER2 = "#383E47", "#404854"
 TEXT, SUBTLE, MUTE = "#F6F7F9", "#ABB3BF", "#738091"
 PRIMARY, PRIMARY2 = "#688ae8", "#9db4f0"
-POS, NEG, ACCENT = "#40bfa9", "#e07f9d", "#e07941"
+POS, NEG, ACCENT = "#40bfa9", "#e07f9d", "#dfb52c"
 GAIN = round((R.DISTILBERT_METRICS["F1 (weighted)"] - R.LR_METRICS["F1 (weighted)"]) * 100, 1)
 HAS_MODEL = os.path.isdir(os.path.join(os.path.dirname(__file__), "model"))
 
@@ -71,7 +71,7 @@ st.markdown(f"""
   .hero {{ background:linear-gradient(135deg,{PANEL} 0%,{ELEV} 100%); border:1px solid {BORDER};
            border-radius:14px; padding:20px 24px; }}
   .mcard {{ background:{PANEL}; border:1px solid {BORDER}; border-left:4px solid {PRIMARY};
-            border-radius:12px; padding:14px 16px; height:100%; }}
+            border-radius:12px; padding:14px 16px; min-height:104px; height:100%; }}
   .mcard .v {{ font-size:25px; font-weight:750; line-height:1.1; color:{TEXT}; }}
   .mcard .l {{ font-size:11.5px; color:{SUBTLE}; text-transform:uppercase; letter-spacing:.05em; margin-top:3px; }}
   .mcard .d {{ font-size:12px; margin-top:5px; }}
@@ -339,6 +339,7 @@ elif nav == "Results":
     L, Rr = st.columns(2)
     with L:
         section("scale", "TF-IDF + Logistic Regression")
+        st.markdown(badge("Baseline", PRIMARY, "scale"), unsafe_allow_html=True)
         cc = st.columns(2)
         with cc[0]:
             card("gauge", f"{R.LR_METRICS['F1 (weighted)']*100:.1f}%", "F1 (weighted)", ACCENT)
@@ -356,7 +357,7 @@ elif nav == "Results":
         st.dataframe(report_df(R.DISTILBERT_REPORT), width="stretch")
 
     st.write("")
-    cm1, cm2 = st.columns([2, 3])
+    cm1, cm2 = st.columns(2)
     with cm1:
         section("layers", "Confusion matrix")
         lab = ["Negative", "Positive"]
