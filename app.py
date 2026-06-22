@@ -215,7 +215,7 @@ with st.sidebar:
     st.divider()
     st.markdown(f"{icon('users',15,SUBTLE,2,6)}<b style='color:{TEXT}'>Team</b>", unsafe_allow_html=True)
     for mm in R.PROJECT["team"]:
-        st.caption("• " + mm)
+        st.markdown(f"<div style='font-size:15.5px; color:{TEXT}; font-weight:600; margin:4px 0 4px 4px'>{icon('check',13,POS,2,6)}{mm}</div>", unsafe_allow_html=True)
     st.divider()
     st.markdown(badge("Fine-tuned model loaded", POS, "check") if HAS_MODEL
                 else badge("Pretrained fallback", ACCENT, "info"), unsafe_allow_html=True)
@@ -321,6 +321,7 @@ if nav == "Data & EDA":
 # ====================================================================== RESULTS
 elif nav == "Results":
     section("cpu", "Model comparison")
+    st.caption("Both models evaluated on the same held-out test set. F1 (weighted) is the headline metric.")
     comp = pd.DataFrame(R.MODEL_COMPARISON)
     fig = go.Figure()
     fig.add_bar(name="Accuracy", x=comp["Model"], y=comp["Accuracy"], marker_color=PRIMARY,
@@ -402,7 +403,7 @@ elif nav == "Try it Live":
             st.session_state["rev"] = ex[pick]
             st.session_state["_lp"] = pick
         st.text_area("Your game review", key="rev", height=110)
-        run_tf = st.toggle("Also run the transformer (compare both)", value=False)
+        run_tf = st.toggle("Also run the transformer (compare both)", value=True)
         if st.button("Classify", type="primary", icon=":material/play_arrow:"):
             txt = st.session_state["rev"]
             if not txt.strip():
