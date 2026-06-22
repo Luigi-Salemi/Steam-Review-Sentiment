@@ -245,7 +245,7 @@ with st.sidebar:
         f"<div style='font-size:12.5px;color:{MUTE};margin-top:3px'>{R.PROJECT['school']}</div>",
         unsafe_allow_html=True)
     st.divider()
-    nav = st.radio("Sections", ["Data & EDA", "Results", "Takeaways", "Try it Live"], label_visibility="collapsed")
+    nav = st.radio("Sections", ["Data & EDA", "Results", "Try it Live", "Takeaways"], label_visibility="collapsed")
     st.divider()
     st.markdown(f"{icon('users',16,SUBTLE,2,6)}<b style='color:{TEXT};font-size:15px'>Team</b>", unsafe_allow_html=True)
     for mm in R.PROJECT["team"]:
