@@ -203,10 +203,9 @@ _warm_once()
 
 # ── sidebar ───────────────────────────────────────────────────────────
 with st.sidebar:
-    _banner = os.path.join(os.path.dirname(__file__), "assets", "banner.jpg")
-    if os.path.exists(_banner):
-        _bc = st.columns([1, 2, 1])
-        _bc[1].image(_banner, width=84)
+    _logo = os.path.join(os.path.dirname(__file__), "assets", "usd_logo.svg")
+    if os.path.exists(_logo):
+        st.markdown(f"<div style='text-align:center; margin:2px 0 10px'>{open(_logo).read()}</div>", unsafe_allow_html=True)
     st.markdown(f"<div style='display:flex;align-items:center;gap:8px;font-size:17px;font-weight:750;color:{TEXT}'>"
                 f"{icon('gamepad',22,PRIMARY)}Steam Sentiment</div>", unsafe_allow_html=True)
     st.caption(f"{R.PROJECT['course']} · {R.PROJECT['school']}")
