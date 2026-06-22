@@ -28,7 +28,7 @@ BORDER, BORDER2 = "#383E47", "#404854"
 TEXT, SUBTLE, MUTE = "#F6F7F9", "#ABB3BF", "#738091"
 PRIMARY, PRIMARY2 = "#688ae8", "#9db4f0"
 POS, NEG, ACCENT = "#40bfa9", "#e07f9d", "#e07941"
-GAIN = round((R.DISTILBERT_METRICS["Accuracy"] - R.LR_METRICS["Accuracy"]) * 100, 1)
+GAIN = round((R.DISTILBERT_METRICS["F1 (weighted)"] - R.LR_METRICS["F1 (weighted)"]) * 100, 1)
 HAS_MODEL = os.path.isdir(os.path.join(os.path.dirname(__file__), "model"))
 
 # ── Lucide icons (inline SVG, MIT licensed) ───────────────────────────
@@ -88,7 +88,7 @@ st.markdown(f"""
            border-radius:0 10px 10px 0; padding:11px 15px; margin-bottom:9px; color:{TEXT}; }}
   .note {{ color:{SUBTLE}; font-size:13px; }}
   section[data-testid="stSidebar"] {{ background:{PANEL}; border-right:1px solid {BORDER}; }}
-  .stTabs [data-baseweb="tab-list"] {{ gap:6px; }}
+  .stTabs [data-baseweb="tab-list"] {{ gap:6px; position:sticky; top:0; z-index:100; background:{BG}; padding:8px 0 0; }}
   .stTabs [data-baseweb="tab"] {{ background:{PANEL}; border:1px solid {BORDER}; border-radius:9px 9px 0 0; padding:9px 20px; color:{SUBTLE}; }}
   .stTabs [aria-selected="true"] {{ background:{ELEV}; color:{TEXT}; border-bottom:2px solid {PRIMARY}; }}
 </style>
@@ -203,6 +203,9 @@ _warm_once()
 
 # ── sidebar ───────────────────────────────────────────────────────────
 with st.sidebar:
+    _banner = os.path.join(os.path.dirname(__file__), "assets", "banner.jpg")
+    if os.path.exists(_banner):
+        st.image(_banner, width="stretch")
     st.markdown(f"<div style='display:flex;align-items:center;gap:8px;font-size:17px;font-weight:750;color:{TEXT}'>"
                 f"{icon('gamepad',22,PRIMARY)}Steam Sentiment</div>", unsafe_allow_html=True)
     st.caption(f"{R.PROJECT['course']} · {R.PROJECT['school']}")
@@ -232,8 +235,8 @@ with m[0]:
 with m[1]:
     card("gamepad", f"{R.N_GAMES}", "Games", PRIMARY)
 with m[2]:
-    card("trophy", f"{R.DISTILBERT_METRICS['Accuracy']*100:.1f}%", "DistilBERT accuracy",
-         ACCENT, delta=f"+{GAIN} pts vs baseline")
+    card("trophy", f"{R.DISTILBERT_METRICS['F1 (weighted)']*100:.1f}%", "DistilBERT · F1 (weighted)",
+         ACCENT, delta=f"+{GAIN} pts F1 vs baseline")
 with m[3]:
     card("calendar", "2024–2026", "Recent reviews", PRIMARY)
 
@@ -325,9 +328,9 @@ with tab_results:
     fig.update_traces(textfont_color=TEXT)
     fig.update_layout(barmode="group", yaxis=dict(range=[0, 1.0], tickformat=".0%"), yaxis_title="Score")
     st.plotly_chart(style(fig, 360), width="stretch")
-    panel("trophy", f"Fine-tuned <b>DistilBERT ({R.DISTILBERT_METRICS['Accuracy']*100:.1f}%)</b> beats the "
-                    f"<b>TF-IDF + Logistic Regression baseline ({R.LR_METRICS['Accuracy']*100:.1f}%)</b> by "
-                    f"<b>~{GAIN} points</b> — contextual embeddings catch the sarcasm and slang in game reviews.", ACCENT)
+    panel("trophy", f"Fine-tuned <b>DistilBERT (F1 {R.DISTILBERT_METRICS['F1 (weighted)']*100:.1f}%)</b> beats the "
+                    f"<b>TF-IDF + Logistic Regression baseline (F1 {R.LR_METRICS['F1 (weighted)']*100:.1f}%)</b> by "
+                    f"<b>~{GAIN} F1 points</b> — contextual embeddings catch the sarcasm and slang in game reviews.", ACCENT)
 
     st.divider()
     L, Rr = st.columns(2)
@@ -335,18 +338,18 @@ with tab_results:
         section("scale", "TF-IDF + Logistic Regression")
         cc = st.columns(2)
         with cc[0]:
-            card("gauge", f"{R.LR_METRICS['Accuracy']*100:.1f}%", "Accuracy")
+            card("gauge", f"{R.LR_METRICS['F1 (weighted)']*100:.1f}%", "F1 (weighted)", ACCENT)
         with cc[1]:
-            card("gauge", f"{R.LR_METRICS['F1 (weighted)']*100:.1f}%", "F1 (weighted)")
+            card("gauge", f"{R.LR_METRICS['Accuracy']*100:.1f}%", "Accuracy")
         st.dataframe(report_df(R.LR_REPORT), width="stretch")
     with Rr:
         section("cpu", "Fine-tuned DistilBERT")
         st.markdown(badge("Best model", ACCENT, "trophy"), unsafe_allow_html=True)
         cc = st.columns(2)
         with cc[0]:
-            card("gauge", f"{R.DISTILBERT_METRICS['Accuracy']*100:.1f}%", "Accuracy")
+            card("gauge", f"{R.DISTILBERT_METRICS['F1 (weighted)']*100:.1f}%", "F1 (weighted)", ACCENT)
         with cc[1]:
-            card("gauge", f"{R.DISTILBERT_METRICS['F1 (weighted)']*100:.1f}%", "F1 (weighted)")
+            card("gauge", f"{R.DISTILBERT_METRICS['Accuracy']*100:.1f}%", "Accuracy")
         st.dataframe(report_df(R.DISTILBERT_REPORT), width="stretch")
 
     st.write("")
