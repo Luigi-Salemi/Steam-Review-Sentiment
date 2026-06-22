@@ -89,9 +89,9 @@ st.markdown(f"""
            border-radius:0 10px 10px 0; padding:11px 15px; margin-bottom:9px; min-height:86px; color:{TEXT}; }}
   .note {{ color:{SUBTLE}; font-size:13px; }}
   section[data-testid="stSidebar"] {{ background:{PANEL}; border-right:1px solid {BORDER}; }}
-  section[data-testid="stSidebar"] hr {{ margin:7px 0; }}
-  section[data-testid="stSidebar"] [data-testid="stVerticalBlock"] {{ gap:0.5rem; }}
-  section[data-testid="stSidebar"] .block-container {{ padding-top:1.1rem; }}
+  section[data-testid="stSidebar"] hr {{ margin:13px 0; }}
+  section[data-testid="stSidebar"] [data-testid="stVerticalBlock"] {{ gap:0.85rem; }}
+  section[data-testid="stSidebar"] .block-container {{ padding-top:1.4rem; }}
   .stTabs [data-baseweb="tab-list"] {{ gap:6px; position:sticky; top:0; z-index:100; background:{BG}; padding:8px 0 0; }}
   .stTabs [data-baseweb="tab"] {{ background:{PANEL}; border:1px solid {BORDER}; border-radius:9px 9px 0 0; padding:9px 20px; color:{SUBTLE}; }}
   .stTabs [aria-selected="true"] {{ background:{ELEV}; color:{TEXT}; border-bottom:2px solid {PRIMARY}; }}
@@ -251,7 +251,7 @@ with st.sidebar:
     nav = st.radio("Sections", ["Data & EDA", "Results", "Try it Live", "Takeaways"], label_visibility="collapsed")
     st.divider()
     st.markdown(f"{icon('users',15,SUBTLE,2,6)}<b style='color:{TEXT};font-size:14px'>Team</b>"
-                + "".join(f"<div style='font-size:16px;color:{TEXT};font-weight:650;margin:4px 0 0 4px'>"
+                + "".join(f"<div style='font-size:16px;color:{TEXT};font-weight:650;margin:9px 0 0 4px'>"
                           f"{icon('check',13,POS,2,7)}{mm}</div>" for mm in R.PROJECT["team"]),
                 unsafe_allow_html=True)
     st.divider()
