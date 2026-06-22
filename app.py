@@ -107,6 +107,29 @@ def card(icon_name, value, label, accent=PRIMARY, delta=None):
                 f"<div class='v'>{value}</div><div class='l'>{label}</div>{d}</div>", unsafe_allow_html=True)
 
 
+_METRIC_NAME = {"Accuracy": "Accuracy", "Precision (weighted)": "Precision",
+                "Recall (weighted)": "Recall", "F1 (weighted)": "F1 score"}
+_METRIC_SCI = {"Accuracy": "(correct / total predictions)",
+               "Precision (weighted)": "(positive predictive value)",
+               "Recall (weighted)": "(sensitivity / TPR)",
+               "F1 (weighted)": "(harmonic mean of P &amp; R)"}
+
+
+def metric_grid(metrics):
+    tiles = ""
+    for k in ["Accuracy", "Precision (weighted)", "Recall (weighted)", "F1 (weighted)"]:
+        if k not in metrics:
+            continue
+        col = ACCENT if k == "F1 (weighted)" else TEXT
+        tiles += (
+            f"<div style='background:{PANEL};border:1px solid {BORDER};border-radius:10px;padding:11px 13px'>"
+            f"<div style='font-size:11.5px;color:{SUBTLE};text-transform:uppercase;letter-spacing:.04em'>{_METRIC_NAME[k]}</div>"
+            f"<div style='font-size:23px;font-weight:750;color:{col};line-height:1.2;margin:3px 0 2px'>{metrics[k]*100:.1f}%</div>"
+            f"<div style='font-size:11px;color:{MUTE};line-height:1.3'>{_METRIC_SCI[k]}</div></div>")
+    st.markdown(f"<div style='display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 12px'>{tiles}</div>",
+                unsafe_allow_html=True)
+
+
 def section(icon_name, title, accent=PRIMARY):
     st.markdown(f"<div class='sec'>{icon(icon_name,20,accent,2.2,0)}<span class='t'>{title}</span></div>",
                 unsafe_allow_html=True)
@@ -341,20 +364,12 @@ elif nav == "Results":
     with L:
         section("scale", "TF-IDF + Logistic Regression")
         st.markdown(badge("Baseline", PRIMARY, "scale"), unsafe_allow_html=True)
-        cc = st.columns(2)
-        with cc[0]:
-            card("gauge", f"{R.LR_METRICS['F1 (weighted)']*100:.1f}%", "F1 (weighted)", ACCENT)
-        with cc[1]:
-            card("gauge", f"{R.LR_METRICS['Accuracy']*100:.1f}%", "Accuracy")
+        metric_grid(R.LR_METRICS)
         st.dataframe(report_df(R.LR_REPORT), width="stretch")
     with Rr:
         section("cpu", "Fine-tuned DistilBERT")
         st.markdown(badge("Best model", ACCENT, "trophy"), unsafe_allow_html=True)
-        cc = st.columns(2)
-        with cc[0]:
-            card("gauge", f"{R.DISTILBERT_METRICS['F1 (weighted)']*100:.1f}%", "F1 (weighted)", ACCENT)
-        with cc[1]:
-            card("gauge", f"{R.DISTILBERT_METRICS['Accuracy']*100:.1f}%", "Accuracy")
+        metric_grid(R.DISTILBERT_METRICS)
         st.dataframe(report_df(R.DISTILBERT_REPORT), width="stretch")
 
     st.write("")
