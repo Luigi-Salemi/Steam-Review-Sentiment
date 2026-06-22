@@ -230,9 +230,9 @@ with st.sidebar:
 
 
 # ── hero + headline metrics ───────────────────────────────────────────
-st.markdown(f"<div class='hero'><div style='display:flex;align-items:center;gap:10px'>"
+st.markdown(f"<div style='display:flex;align-items:center;gap:11px;margin-top:2px'>"
             f"{icon('gamepad',28,PRIMARY,2.2,0)}<h1 style='margin:0;font-size:28px'>{R.PROJECT['title']}</h1></div>"
-            f"<div class='note' style='margin-top:8px;font-size:14px'>{R.PROJECT['objective']}</div></div>",
+            f"<div class='note' style='margin-top:8px;font-size:14px;max-width:1020px'>{R.PROJECT['objective']}</div>",
             unsafe_allow_html=True)
 st.write("")
 m = st.columns(4)
