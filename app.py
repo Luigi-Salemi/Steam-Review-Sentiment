@@ -248,15 +248,13 @@ st.write("")
 if nav == "Data & EDA":
     st.caption(f"{R.RAW_REVIEW_COUNT:,} recent reviews across {R.N_GAMES} games, via the official Steam Reviews API. "
                f"Labels are each review's recommend / not-recommend ({R.LABEL_SOURCE}) — Steam has no star ratings.")
-    d = st.columns(4)
+    d = st.columns(3)
     with d[0]:
-        card("database", f"{R.RAW_REVIEW_COUNT:,}", "Collected")
-    with d[1]:
-        card("scale", f"{R.BALANCED_TOTAL:,}", "Balanced set")
-    with d[2]:
         card("split", f"{R.TRAIN_SIZE:,} / {R.TEST_SIZE:,}", "Train / test")
-    with d[3]:
-        card("gamepad", f"{R.N_GAMES}", "Games")
+    with d[1]:
+        card("layers", f"{R.UNIQUE_REVIEWS:,}", "Unique reviews")
+    with d[2]:
+        card("list", f"{R.DUPLICATE_REVIEWS:,}", "Duplicates")
 
     st.write("")
     c1, c2 = st.columns([3, 2])
